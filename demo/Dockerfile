@@ -1,0 +1,10 @@
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.2
+
+EXPOSE 9080
+
+RUN microdnf install nc && microdnf clean all
+
+ARG name=prepared_image
+ENV PREPARED_NAME=$name
+
+CMD ncat -kl --sh-exec 'echo -e "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"caller\":\"${PREPARED_NAME}\", \"color\":\"#F00\"}"' 0.0.0.0 9080

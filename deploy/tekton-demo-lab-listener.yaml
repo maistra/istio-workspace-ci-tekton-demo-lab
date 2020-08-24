@@ -1,0 +1,33 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: tekton-demo
+  labels:
+    maistra.io/expose-route: "true"
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - name: pull-request
+      interceptors:
+        - github:
+            eventTypes: ["pull_request"]
+        - cel:
+            filter: "body.action in ['opened', 'synchronize', 'reopened']"
+      bindings:
+        - name: github-pr
+        - name: github-pullreq
+          kind: ClusterTriggerBinding
+      template:
+        name: pull-request-preview
+    - name: pull-request-close
+      interceptors:
+        - github:
+            eventTypes: ["pull_request"]
+        - cel:
+            filter: "body.action in ['closed', 'merged']"
+      bindings:
+        - name: github-pr
+        - name: github-pullreq
+          kind: ClusterTriggerBinding
+      template:
+        name: pull-request-close

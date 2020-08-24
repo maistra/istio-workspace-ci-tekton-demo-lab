@@ -1,0 +1,471 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-and-preview
+spec:
+  params:
+    - name: git-revision # for some reason $(resources.git-repo.revision) does not work as a param to a task
+      type: string
+      description: the revision to update status on
+    - name: git-repo-name
+      type: string
+      description: the name of the repo
+    - name: git-repo-full-name
+      type: string
+      description: the name of the repo org/name
+    - name: git-pr-url
+      type: string
+      description: the name of the repo org/name
+    - name: git-pr-base-sha
+      type: string
+      description: the bsae sha for the pull request
+    - name: git-repo-url
+      type: string
+      description: the url to clone the repo
+    - name: git-pr-head-ref
+      type: string
+      description: the head branch ref
+  workspaces:
+    - name: sync
+    - name: source
+  resources:
+    - name: git-repo
+      type: git
+  tasks:
+    - name: clone
+      taskRef: 
+        kind: ClusterTask
+        name: git-clone
+      params:
+        - name: url
+          value: $(params.git-repo-url)
+        - name: revision
+          value: $(params.git-revision)
+        - name: depth
+          value: "0"
+      workspaces:
+        - name: output
+          workspace: source
+
+#### Customer
+
+    - name: build-customer
+      taskRef:
+        kind: ClusterTask
+        name: maven
+      runAfter:
+        - clone
+      conditions:
+        - conditionRef: path-changed
+          params:
+            - name: path
+              value: workshop/content/src/customer/
+            - name: compare
+              value: $(params.git-pr-base-sha)
+          resources:
+            - name: git-repo
+              resource: git-repo
+      params:
+        - name: GOALS
+          value:
+            - package 
+            - -f 
+            - workshop/content/src/customer/pom.xml
+            - -DskipTests
+      workspaces:
+        - name: maven-settings
+          workspace: source
+        - name: source
+          workspace: source
+    - name: image-customer
+      taskRef:
+        name: buildah
+        kind: Task
+      retries: 1
+      runAfter:
+        - build-customer
+      params:
+        - name: TLSVERIFY
+          value: "false"
+        - name: DOCKERFILE
+          value: Dockerfile
+        - name: CONTEXT
+          value: ./workshop/content/src/customer/
+        - name: IMAGE
+          value: image-registry.openshift-image-registry.svc:5000/workspace-demo/$(params.git-repo-name)-customer:$(params.git-revision)
+      workspaces:
+        - name: source
+          workspace: source
+    - name: preview-customer
+      taskRef:
+        name: ike-create
+        kind: Task
+      runAfter:
+        - image-customer
+      params:
+        - name: session
+          value: $(params.git-pr-head-ref)
+        - name: target
+          value: customer-v1
+        - name: route
+          value: "header:ike-session-id=$(params.git-pr-head-ref)"
+        - name: namespace
+          value: workspace-demo
+        - name: image
+          value: image-registry.openshift-image-registry.svc:5000/workspace-demo/$(params.git-repo-name)-customer:$(params.git-revision)
+    - name: write-to-sync-1
+      taskRef:
+        name: write-to-sync
+        kind: Task
+      runAfter:
+        - preview-customer
+      workspaces:
+        - name: output
+          workspace: sync
+      params:
+        - name: file
+          value: build-customer
+
+##### Preference
+
+    - name: build-preference
+      taskRef:
+        kind: ClusterTask
+        name: maven
+      runAfter:
+        - clone
+      conditions:
+        - conditionRef: path-changed
+          params:
+            - name: path
+              value: workshop/content/src/preference/
+            - name: compare
+              value: $(params.git-pr-base-sha)
+          resources:
+            - name: git-repo
+              resource: git-repo
+      params:
+        - name: GOALS
+          value:
+            - package 
+            - -f 
+            - workshop/content/src/preference/pom.xml
+            - -DskipTests
+      workspaces:
+        - name: maven-settings
+          workspace: source
+        - name: source
+          workspace: source
+    - name: image-preference
+      taskRef:
+        name: buildah
+        kind: Task
+      retries: 1
+      runAfter:
+        - build-preference
+      params:
+        - name: TLSVERIFY
+          value: "false"
+        - name: DOCKERFILE
+          value: Dockerfile
+        - name: CONTEXT
+          value: ./workshop/content/src/preference/
+        - name: IMAGE
+          value: image-registry.openshift-image-registry.svc:5000/workspace-demo/$(params.git-repo-name)-preference:$(params.git-revision)
+      workspaces:
+        - name: source
+          workspace: source
+    - name: preview-preference
+      taskRef:
+        name: ike-create
+        kind: Task
+      runAfter:
+        - image-preference
+      params:
+        - name: session
+          value: $(params.git-pr-head-ref)
+        - name: target
+          value: preference-v1
+        - name: route
+          value: "header:ike-session-id=$(params.git-pr-head-ref)"
+        - name: namespace
+          value: workspace-demo
+        - name: image
+          value: image-registry.openshift-image-registry.svc:5000/workspace-demo/$(params.git-repo-name)-preference:$(params.git-revision)
+    - name: write-to-sync-2
+      taskRef:
+        name: write-to-sync
+        kind: Task
+      runAfter:
+        - preview-preference
+      workspaces:
+        - name: output
+          workspace: sync
+      params:
+        - name: file
+          value: build-preference
+
+##### Recommendation
+
+    - name: build-recommendation
+      taskRef:
+        kind: ClusterTask
+        name: maven
+      runAfter:
+        - clone
+      conditions:
+        - conditionRef: path-changed
+          params:
+            - name: path
+              value: workshop/content/src/recommendation/
+            - name: compare
+              value: $(params.git-pr-base-sha)
+          resources:
+            - name: git-repo
+              resource: git-repo
+      params:
+        - name: GOALS
+          value:
+            - package 
+            - -f 
+            - workshop/content/src/recommendation/pom.xml
+            - -DskipTests
+      workspaces:
+        - name: maven-settings
+          workspace: source
+        - name: source
+          workspace: source
+    - name: image-recommendation
+      taskRef:
+        name: buildah
+        kind: Task
+      retries: 1
+      runAfter:
+        - build-recommendation
+      params:
+        - name: TLSVERIFY
+          value: "false"
+        - name: DOCKERFILE
+          value: Dockerfile
+        - name: CONTEXT
+          value: ./workshop/content/src/recommendation/
+        - name: IMAGE
+          value: image-registry.openshift-image-registry.svc:5000/workspace-demo/$(params.git-repo-name)-recommendation:$(params.git-revision)
+      workspaces:
+        - name: source
+          workspace: source
+    - name: preview-recommendation
+      taskRef:
+        name: ike-create
+        kind: Task
+      runAfter:
+        - image-recommendation
+      params:
+        - name: session
+          value: $(params.git-pr-head-ref)
+        - name: target
+          value: recommendation-v1
+        - name: route
+          value: "header:ike-session-id=$(params.git-pr-head-ref)"
+        - name: namespace
+          value: workspace-demo
+        - name: image
+          value: image-registry.openshift-image-registry.svc:5000/workspace-demo/$(params.git-repo-name)-recommendation:$(params.git-revision)
+    - name: write-to-sync-3
+      taskRef:
+        name: write-to-sync
+        kind: Task
+      runAfter:
+        - preview-recommendation
+      workspaces:
+        - name: output
+          workspace: sync
+      params:
+        - name: file
+          value: build-recommendation
+
+
+    - name: pending-status
+      taskRef:
+        kind: Task
+        name: github-set-status
+      params:
+        - name: REPO_FULL_NAME
+          value: $(params.git-repo-full-name)
+        - name: SHA
+          value: $(params.git-revision)
+        - name: DESCRIPTION
+          value: "Build has started"
+        - name: STATE
+          value: pending
+        - name: TARGET_URL
+          value: https://tekon/dashboard/taskrun/log
+    - name: wait-for-sync
+      taskRef:
+        name: wait-for-sync
+        kind: Task
+      timeout: 20m
+      workspaces:
+        - name: output
+          workspace: sync
+    - name: session-url
+      taskRef:
+        name: ike-session-url
+        kind: Task
+      runAfter:
+        - wait-for-sync
+      params:
+        - name: session
+          value: $(params.git-pr-head-ref)
+        - name: namespace
+          value: workspace-demo
+    - name: preview-comment
+      taskRef:
+        kind: Task
+        name: github-add-comment
+      runAfter:
+        - session-url
+      params:
+        - name: REQUEST_URL
+          value: $(params.git-pr-url)
+        - name: COMMENT
+          value: |
+            The changes are ready to be reviewed via [$(tasks.session-url.results.url)](http://$(tasks.session-url.results.url))
+    - name: test
+      taskRef:
+        name: run-tests
+        kind: Task
+      runAfter:
+        - session-url
+      params:
+        - name: url
+          value: $(tasks.session-url.results.url
+    - name: success-status
+      taskRef:
+        kind: Task
+        name: github-set-status
+      runAfter:
+        - test
+      params:
+        - name: REPO_FULL_NAME
+          value: $(params.git-repo-full-name)
+        - name: SHA
+          value: $(params.git-revision)
+        - name: DESCRIPTION
+          value: "Build has started"
+        - name: STATE
+          value: success
+        - name: TARGET_URL
+          value: https://tekon/dashboard/taskrun/log
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: undeploy-preview
+spec:
+  params:
+    - name: git-pr-head-ref
+      type: string
+      description: the head branch ref
+  tasks:
+    - name: preview
+      taskRef:
+        name: ike-delete
+        kind: Task
+      params:
+        - name: session
+          value: $(params.git-pr-head-ref)
+        - name: target
+          value: ratings-v1
+        - name: namespace
+          value: workspace-demo
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: run-tests
+spec:
+  params:
+    - name: url
+      type: string
+  steps:
+    - name: execute
+      image: registry.access.redhat.com/ubi8/ubi-minimal:8.2
+      script: |
+        #curl -D - $(params.url)
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: write-to-sync
+spec:
+  params:
+    - name: file
+      type: string
+  workspaces:
+    - name: output
+      description: where the file will be written
+      mountPath: /custom/output/
+  steps:
+    - name: execute
+      image: registry.access.redhat.com/ubi8/ubi-minimal:8.2
+      script: |
+        touch $(workspaces.output.path)$(params.file)
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: wait-for-sync
+spec:
+  workspaces:
+    - name: output
+      description: where the file will be written
+      mountPath: /custom/output/
+  steps:
+    - name: execute
+      image: registry.access.redhat.com/ubi8/ubi-minimal:8.2
+      script: |
+        #!/bin/sh
+        set -ex
+        set -o pipefail
+
+        while [ ! -e $(workspaces.output.path)* ]
+        do
+          echo "waiting..."
+          ls -l $(workspaces.output.path)
+          sleep 1
+        done
+        echo "done..."
+        ls -l $(workspaces.output.path)
+        exit 0
+
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Condition
+metadata:
+  name: path-changed
+spec:
+  params:
+    - name: path
+    - name: compare
+      default: master
+    - name: revision
+      default: HEAD
+  resources:
+    - name: git-repo
+      type: git
+  check:
+    image: alpine/git:latest
+    script: |
+      #!/bin/sh
+      set -ex
+      set -o pipefail
+
+      cd $(resources.git-repo.path)
+      git diff-tree --no-commit-id --name-only -r $(resources.git-repo.revision) $(params.compare) | \
+         grep $(params.path)

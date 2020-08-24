@@ -1,0 +1,350 @@
+   0.0 TEL | Telepresence 0.104 launched at Fri Mar 20 00:10:48 2020
+   0.0 TEL |   /usr/bin/telepresence --namespace workspace-demo --deployment preference-v1-v1-aslak-vtjvv --expose 8082:8080 --method inject-tcp --run mvn compile quarkus:dev -Ddebug=5002 -Dsuspend=n -Dquarkus.http.port=8082
+   0.0 TEL | uname: uname_result(system='Linux', node='localhost.localdomain', release='5.5.9-200.fc31.x86_64', version='#1 SMP Thu Mar 12 13:55:19 UTC 2020', machine='x86_64', processor='x86_64')
+   0.0 TEL | Platform: linux
+   0.0 TEL | WSL: False
+   0.0 TEL | Python 3.7.6 (default, Jan 30 2020, 09:44:41)
+   0.0 TEL | [GCC 9.2.1 20190827 (Red Hat 9.2.1-1)]
+   0.0 TEL | BEGIN SPAN main.py:40(main)
+   0.0 TEL | BEGIN SPAN startup.py:83(set_kube_command)
+   0.0 TEL | Found kubectl -> /usr/bin/kubectl
+   0.0 TEL | Found oc -> /home/aslak/.asdf/shims/oc
+   0.0 TEL | [1] Capturing: kubectl config current-context
+   0.1 TEL | [1] captured in 0.11 secs.
+   0.1 TEL | [2] Capturing: kubectl --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin version --short
+   1.1 TEL | [2] captured in 0.94 secs.
+   1.1 TEL | [3] Capturing: kubectl --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin config view -o json
+   1.2 TEL | [3] captured in 0.16 secs.
+   1.2 TEL | [4] Capturing: kubectl --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin get ns workspace-demo
+   2.0 TEL | [4] captured in 0.77 secs.
+   2.0 TEL | [5] Capturing: kubectl --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin api-versions
+   3.3 TEL | [5] captured in 1.29 secs.
+   3.3 TEL | Command: oc 1.10.0+d4cacc0
+   3.3 TEL | Context: workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin, namespace: workspace-demo, version: 1.16.2
+   3.3 TEL | [6] Capturing: minishift ip
+   3.3 TEL | [6] [Errno 2] No such file or directory: 'minishift': 'minishift'
+   3.3 >>> | Warning: kubectl 1.10.0+d4cacc0 may not work correctly with cluster version 1.16.2 due to the version discrepancy. See https://kubernetes.io/docs/setup/version-skew-policy/ for more information.
+   3.3 >>> | 
+   3.3 TEL | END SPAN startup.py:83(set_kube_command)    3.3s
+   3.3 TEL | [7] Running: oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo get dc/preference-v1-v1-aslak-vtjvv
+   4.6   7 | Error from server (NotFound): deploymentconfigs.apps.openshift.io "preference-v1-v1-aslak-vtjvv" not found
+   4.6 TEL | [7] exit 1 in 1.32 secs.
+   4.6 >>> | Failed to find OpenShift deploymentconfig preference-v1-v1-aslak-vtjvv:
+   4.6 >>> |   Error from server (NotFound): deploymentconfigs.apps.openshift.io "preference-v1-v1-aslak-vtjvv" not found
+   4.6 >>> | Will try regular Kubernetes Deployment.
+   4.6 TEL | Found ssh -> /usr/bin/ssh
+   4.6 TEL | [8] Capturing: ssh -V
+   4.6 TEL | [8] captured in 0.02 secs.
+   4.6 TEL | Found mvn -> /home/aslak/dev/tools/apache-maven-3.6.2//bin/mvn
+   4.6 TEL | Found torsocks -> /usr/bin/torsocks
+   4.6 TEL | Found sshfs -> /usr/bin/sshfs
+   4.6 TEL | Found fusermount -> /usr/bin/fusermount
+   4.6 TEL | [9] Running: oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo get pods telepresence-connectivity-check --ignore-not-found
+   5.9 TEL | [9] ran in 1.26 secs.
+   6.5 TEL | Scout info: {'latest_version': '0.104', 'application': 'telepresence', 'notices': []}
+   6.5 >>> | Starting network proxy to cluster using the existing proxy Deployment preference-v1-v1-aslak-vtjvv
+   6.5 TEL | [10] Running: oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo get deployment preference-v1-v1-aslak-vtjvv
+   7.7  10 | NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+   7.7  10 | preference-v1-v1-aslak-vtjvv   0/1     1            0           9s
+   7.7 TEL | [10] ran in 1.24 secs.
+   7.7 TEL | BEGIN SPAN remote.py:142(get_remote_info)
+   7.7 TEL | BEGIN SPAN remote.py:75(get_deployment_json)
+   7.7 TEL | [11] Capturing: oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo get deployment -o json preference-v1-v1-aslak-vtjvv
+   9.0 TEL | [11] captured in 1.22 secs.
+   9.0 TEL | END SPAN remote.py:75(get_deployment_json)    1.2s
+   9.0 TEL | Searching for Telepresence pod:
+   9.0 TEL |   with name preference-v1-v1-aslak-vtjvv-*
+   9.0 TEL |   with labels {'app': 'preference', 'telepresence': 'test', 'version': 'v1-aslak-vtjvv', 'version-source': 'v1'}
+   9.0 TEL | [12] Capturing: oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo get pod -o json
+  10.3 TEL | [12] captured in 1.32 secs.
+  10.3 TEL | Checking customer-v1-76964895dd-pfzrc
+  10.3 TEL | --> Name does not match
+  10.3 TEL | Checking istio-workspace-677868f6c9-jnmts
+  10.3 TEL | --> Name does not match
+  10.3 TEL | Checking preference-v1-86556c7-wx7gr
+  10.3 TEL | --> Name does not match
+  10.3 TEL | Checking preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx
+  10.3 TEL | Looks like we've found our pod!
+  10.3 TEL | BEGIN SPAN remote.py:104(wait_for_pod)
+  10.3 TEL | [13] Capturing: oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo get pod preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx -o json
+  11.2 TEL | [13] captured in 0.93 secs.
+  11.2 TEL | END SPAN remote.py:104(wait_for_pod)    0.9s
+  11.2 TEL | END SPAN remote.py:142(get_remote_info)    3.5s
+  11.2 TEL | BEGIN SPAN connect.py:37(connect)
+  11.2 TEL | [14] Launching kubectl logs: oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo logs -f preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx --container preference --tail=10
+  11.2 TEL | [15] Launching kubectl port-forward: oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo port-forward preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx 39939:8022
+  11.2 TEL | [16] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  11.2 TEL | [16] exit 255 in 0.01 secs.
+  11.5 TEL | [17] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  11.5 TEL | [17] exit 255 in 0.01 secs.
+  11.7 TEL | [18] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  11.8 TEL | [18] exit 255 in 0.02 secs.
+  12.0 TEL | [19] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  12.0 TEL | [19] exit 255 in 0.02 secs.
+  12.3 TEL | [20] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  12.3 TEL | [20] exit 255 in 0.01 secs.
+  12.5  14 | 2020-03-19T23:10:51+0000 [-] Loading ./forwarder.py...
+  12.5  14 | 2020-03-19T23:10:51+0000 [-] /etc/resolv.conf changed, reparsing
+  12.5  14 | 2020-03-19T23:10:51+0000 [-] Resolver added ('172.30.0.10', 53) to server list
+  12.5  14 | 2020-03-19T23:10:51+0000 [-] SOCKSv5Factory starting on 9050
+  12.5  14 | 2020-03-19T23:10:51+0000 [socks.SOCKSv5Factory#info] Starting factory <socks.SOCKSv5Factory object at 0x7f95c0b8dba8>
+  12.5  14 | 2020-03-19T23:10:51+0000 [-] DNSDatagramProtocol starting on 9053
+  12.5  14 | 2020-03-19T23:10:51+0000 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f95c0b8df28>
+  12.5  14 | 2020-03-19T23:10:51+0000 [-] Loaded.
+  12.5  14 | 2020-03-19T23:10:51+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.10.0 (/usr/bin/python3.6 3.6.8) starting up.
+  12.5  14 | 2020-03-19T23:10:51+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+  12.5 TEL | [21] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  12.6 TEL | [21] exit 255 in 0.02 secs.
+  12.8 TEL | [22] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  12.8 TEL | [22] exit 255 in 0.02 secs.
+  13.1 TEL | [23] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  13.1 TEL | [23] exit 255 in 0.02 secs.
+  13.2  15 | Forwarding from 127.0.0.1:39939 -> 8022
+  13.2  15 | Forwarding from [::1]:39939 -> 8022
+  13.4 TEL | [24] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  13.4  15 | Handling connection for 39939
+  15.0  24 | Connection to 127.0.0.1 closed by remote host.
+  15.1 TEL | [24] exit 255 in 1.68 secs.
+  15.3 TEL | [25] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  15.3  15 | Handling connection for 39939
+  17.3  25 | Connection to 127.0.0.1 closed by remote host.
+  17.3 TEL | [25] exit 255 in 1.98 secs.
+  17.5 TEL | [26] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  17.6  15 | Handling connection for 39939
+  19.4  26 | Connection to 127.0.0.1 closed by remote host.
+  19.5 TEL | [26] exit 255 in 1.93 secs.
+  19.7 TEL | [27] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  19.7  15 | Handling connection for 39939
+  21.8  27 | Connection to 127.0.0.1 closed by remote host.
+  21.8 TEL | [27] exit 255 in 2.08 secs.
+  22.1 TEL | [28] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  22.1  15 | Handling connection for 39939
+  23.8  28 | Connection to 127.0.0.1 closed by remote host.
+  23.8 TEL | [28] exit 255 in 1.78 secs.
+  24.1 TEL | [29] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  24.1  15 | Handling connection for 39939
+  26.1  29 | Connection to 127.0.0.1 closed by remote host.
+  26.1 TEL | [29] exit 255 in 1.98 secs.
+  26.3 TEL | [30] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  26.3  15 | Handling connection for 39939
+  28.3  30 | Connection to 127.0.0.1 closed by remote host.
+  28.4 TEL | [30] exit 255 in 2.03 secs.
+  28.6 TEL | [31] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  28.6  15 | Handling connection for 39939
+  30.3  31 | Connection to 127.0.0.1 closed by remote host.
+  30.3 TEL | [31] exit 255 in 1.68 secs.
+  30.5 TEL | [32] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  30.6  15 | Handling connection for 39939
+  32.4  32 | Connection to 127.0.0.1 closed by remote host.
+  32.4 TEL | [32] exit 255 in 1.88 secs.
+  32.7 TEL | [33] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  32.7  15 | Handling connection for 39939
+  33.8  14 | 2020-03-19T23:11:21+0000 [Poll#error] Failed to contact Telepresence client:
+  33.8  14 | 2020-03-19T23:11:21+0000 [Poll#error] Connection was refused by other side: 111: Connection refused.
+  33.8  14 | 2020-03-19T23:11:21+0000 [Poll#warn] Perhaps it's time to exit?
+  34.9  33 | Connection to 127.0.0.1 closed by remote host.
+  34.9 TEL | [33] exit 255 in 2.24 secs.
+  35.2 TEL | [34] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  35.2  15 | Handling connection for 39939
+  37.0  34 | Connection to 127.0.0.1 closed by remote host.
+  37.0 TEL | [34] exit 255 in 1.83 secs.
+  37.2 TEL | [35] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  37.3  15 | Handling connection for 39939
+  38.8  35 | Connection to 127.0.0.1 closed by remote host.
+  38.8 TEL | [35] exit 255 in 1.57 secs.
+  39.1 TEL | [36] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  39.1  15 | Handling connection for 39939
+  40.8  36 | Connection to 127.0.0.1 closed by remote host.
+  40.9 TEL | [36] exit 255 in 1.78 secs.
+  41.1 TEL | [37] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 39939 telepresence@127.0.0.1 /bin/true
+  41.1  15 | Handling connection for 39939
+  42.8  37 | Connection to 127.0.0.1 closed by remote host.
+  42.8 TEL | [37] exit 255 in 1.73 secs.
+  42.8 TEL | SSH timed out. Pod info follows.
+  42.8 TEL | [38] Running: oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo describe pod preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx
+  44.5  38 | Name:               preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx
+  44.5  38 | Namespace:          workspace-demo
+  44.5  38 | Priority:           0
+  44.5  38 | PriorityClassName:  <none>
+  44.5  38 | Node:               aslak-rqh87-worker-vjc95/192.168.0.19
+  44.5  38 | Start Time:         Fri, 20 Mar 2020 00:10:46 +0100
+  44.5  38 | Labels:             app=preference
+  44.5  38 |                     failure-domain.beta.kubernetes.io/region=regionOne
+  44.5  38 |                     failure-domain.beta.kubernetes.io/zone=nova
+  44.5  38 |                     pod-template-hash=859b978bc9
+  44.5  38 |                     telepresence=test
+  44.5  38 |                     version=v1-aslak-vtjvv
+  44.5  38 |                     version-source=v1
+  44.5  38 | Annotations:        k8s.v1.cni.cncf.io/networks: istio-cni
+  44.5  38 |                     k8s.v1.cni.cncf.io/networks-status:
+  44.5  38 |                       [{
+  44.5  38 |                           "name": "openshift-sdn",
+  44.5  38 |                           "interface": "eth0",
+  44.5  38 |                           "ips": [
+  44.5  38 |                               "10.128.2.31"
+  44.5  38 |                           ],
+  44.5  38 |                           "dns": {},
+  44.5  38 |                           "default-route": [
+  44.5  38 |                               "10.128.2.1"
+  44.5  38 |                           ]
+  44.5  38 |                       },{
+  44.5  38 |                           "name": "istio-cni",
+  44.5  38 |                           "dns": {}
+  44.5  38 |                       }]
+  44.5  38 |                     openshift.io/scc: restricted
+  44.5  38 |                     sidecar.istio.io/inject: true
+  44.5  38 |                     sidecar.istio.io/status:
+  44.5  38 |                       {"version":"73991ae9e1045c88a804777c32e610b13f33399b869fb300216f35cabe295626","annotations":{"k8s.v1.cni.cncf.io/networks":"istio-cni"},"i...
+  44.5  38 | Status:             Running
+  44.5  38 | IP:                 10.128.2.31
+  44.5  38 | Controlled By:      ReplicaSet/preference-v1-v1-aslak-vtjvv-859b978bc9
+  44.5  38 | Containers:
+  44.5  38 |   preference:
+  44.5  38 |     Container ID:   cri-o://e41cfb5b7169a25966550758ad67f39a539ca359798b928bea557424ff4fe467
+  44.5  38 |     Image:          datawire/telepresence-k8s:0.104
+  44.5  38 |     Image ID:       docker.io/datawire/telepresence-k8s@sha256:64c75f15bc1c3a07fa43d5c4a3768b0972759c9e732b5e442ae086398a9220a0
+  44.5  38 |     Port:           8080/TCP
+  44.5  38 |     Host Port:      0/TCP
+  44.5  38 |     State:          Running
+  44.5  38 |       Started:      Fri, 20 Mar 2020 00:10:50 +0100
+  44.5  38 |     Ready:          True
+  44.5  38 |     Restart Count:  0
+  44.5  38 |     Environment:
+  44.5  38 |       JAVA_OPTIONS:                      -Xms128m -Xmx256m -Djava.net.preferIPv4Stack=true -Djava.security.egd=file:///dev/./urandom
+  44.5  38 |       TELEPRESENCE_CONTAINER_NAMESPACE:  workspace-demo (v1:metadata.namespace)
+  44.5  38 |     Mounts:
+  44.5  38 |       /var/run/secrets/kubernetes.io/serviceaccount from default-token-xkr2h (ro)
+  44.5  38 |   istio-proxy:
+  44.5  38 |     Container ID:  cri-o://bd3aa395e1201b9cfe53994046beb6a1cc1d16800436fbbf7421079763206158
+  44.5  38 |     Image:         docker.io/maistra/proxyv2-ubi8:1.0.8
+  44.5  38 |     Image ID:      docker.io/maistra/proxyv2-ubi8@sha256:1e7159b03f74387e0ea8a8a274b5921dd6d8ff85a9a9c3bf2ce6ccfcb8abe293
+  44.5  38 |     Port:          15090/TCP
+  44.5  38 |     Host Port:     0/TCP
+  44.5  38 |     Args:
+  44.5  38 |       proxy
+  44.5  38 |       sidecar
+  44.5  38 |       --domain
+  44.5  38 |       $(POD_NAMESPACE).svc.cluster.local
+  44.5  38 |       --configPath
+  44.5  38 |       /etc/istio/proxy
+  44.5  38 |       --binaryPath
+  44.5  38 |       /usr/local/bin/envoy
+  44.5  38 |       --serviceCluster
+  44.5  38 |       preference.$(POD_NAMESPACE)
+  44.5  38 |       --drainDuration
+  44.5  38 |       45s
+  44.5  38 |       --parentShutdownDuration
+  44.5  38 |       1m0s
+  44.5  38 |       --discoveryAddress
+  44.5  38 |       istio-pilot.istio-system:15010
+  44.5  38 |       --zipkinAddress
+  44.5  38 |       zipkin.istio-system:9411
+  44.5  38 |       --connectTimeout
+  44.5  38 |       10s
+  44.5  38 |       --proxyAdminPort
+  44.5  38 |       15000
+  44.5  38 |       --concurrency
+  44.5  38 |       2
+  44.5  38 |       --controlPlaneAuthPolicy
+  44.5  38 |       NONE
+  44.5  38 |       --statusPort
+  44.5  38 |       15020
+  44.5  38 |       --applicationPorts
+  44.5  38 |       8080
+  44.5  38 |     State:          Running
+  44.5  38 |       Started:      Fri, 20 Mar 2020 00:10:50 +0100
+  44.5  38 |     Ready:          True
+  44.5  38 |     Restart Count:  0
+  44.5  38 |     Limits:
+  44.5  38 |       cpu:     500m
+  44.5  38 |       memory:  128Mi
+  44.5  38 |     Requests:
+  44.5  38 |       cpu:      100m
+  44.5  38 |       memory:   128Mi
+  44.5  38 |     Readiness:  http-get http://:15020/healthz/ready delay=1s timeout=1s period=2s #success=1 #failure=30
+  44.5  38 |     Environment:
+  44.5  38 |       POD_NAME:                      preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx (v1:metadata.name)
+  44.5  38 |       POD_NAMESPACE:                 workspace-demo (v1:metadata.namespace)
+  44.5  38 |       INSTANCE_IP:                    (v1:status.podIP)
+  44.5  38 |       ISTIO_META_POD_NAME:           preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx (v1:metadata.name)
+  44.5  38 |       ISTIO_META_CONFIG_NAMESPACE:   workspace-demo (v1:metadata.namespace)
+  44.5  38 |       ISTIO_META_INTERCEPTION_MODE:  REDIRECT
+  44.5  38 |       ISTIO_METAJSON_ANNOTATIONS:    {"openshift.io/scc":"restricted","sidecar.istio.io/inject":"true"}
+  44.5  38 | 
+  44.5  38 |       ISTIO_METAJSON_LABELS:         {"app":"preference","pod-template-hash":"859b978bc9","telepresence":"test","version":"v1-aslak-vtjvv","version-source":"v1"}
+  44.5  38 | 
+  44.5  38 |     Mounts:
+  44.5  38 |       /etc/certs/ from istio-certs (ro)
+  44.5  38 |       /etc/istio/proxy from istio-envoy (rw)
+  44.5  38 |       /var/run/secrets/kubernetes.io/serviceaccount from default-token-xkr2h (ro)
+  44.5  38 | Conditions:
+  44.5  38 |   Type              Status
+  44.5  38 |   Initialized       True
+  44.5  38 |   Ready             True
+  44.5  38 |   ContainersReady   True
+  44.5  38 |   PodScheduled      True
+  44.5  38 | Volumes:
+  44.5  38 |   default-token-xkr2h:
+  44.5  38 |     Type:        Secret (a volume populated by a Secret)
+  44.5  38 |     SecretName:  default-token-xkr2h
+  44.5  38 |     Optional:    false
+  44.5  38 |   istio-envoy:
+  44.5  38 |     Type:    EmptyDir (a temporary directory that shares a pod's lifetime)
+  44.5  38 |     Medium:  Memory
+  44.5  38 |   istio-certs:
+  44.5  38 |     Type:        Secret (a volume populated by a Secret)
+  44.5  38 |     SecretName:  istio.default
+  44.5  38 |     Optional:    true
+  44.5  38 | QoS Class:       Burstable
+  44.5  38 | Node-Selectors:  <none>
+  44.5  38 | Tolerations:     node.kubernetes.io/memory-pressure:NoSchedule
+  44.5  38 |                  node.kubernetes.io/not-ready:NoExecute for 300s
+  44.5  38 |                  node.kubernetes.io/unreachable:NoExecute for 300s
+  44.5  38 | Events:
+  44.5  38 |   Type     Reason     Age                From                               Message
+  44.5  38 |   ----     ------     ----               ----                               -------
+  44.5  38 |   Normal   Scheduled  <unknown>          default-scheduler                  Successfully assigned workspace-demo/preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx to aslak-rqh87-worker-vjc95
+  44.5  38 |   Normal   Pulling    43s                kubelet, aslak-rqh87-worker-vjc95  Pulling image "datawire/telepresence-k8s:0.104"
+  44.5  38 |   Normal   Pulled     42s                kubelet, aslak-rqh87-worker-vjc95  Successfully pulled image "datawire/telepresence-k8s:0.104"
+  44.5  38 |   Normal   Created    42s                kubelet, aslak-rqh87-worker-vjc95  Created container preference
+  44.5  38 |   Normal   Started    42s                kubelet, aslak-rqh87-worker-vjc95  Started container preference
+  44.5  38 |   Normal   Pulled     42s                kubelet, aslak-rqh87-worker-vjc95  Container image "docker.io/maistra/proxyv2-ubi8:1.0.8" already present on machine
+  44.5  38 |   Normal   Created    42s                kubelet, aslak-rqh87-worker-vjc95  Created container istio-proxy
+  44.5  38 |   Normal   Started    41s                kubelet, aslak-rqh87-worker-vjc95  Started container istio-proxy
+  44.5  38 |   Warning  Unhealthy  37s (x2 over 39s)  kubelet, aslak-rqh87-worker-vjc95  Readiness probe failed: HTTP probe failed with statuscode: 503
+  44.5 TEL | [38] ran in 1.68 secs.
+  46.5 TEL | CRASH: SSH to the cluster failed to start. See logfile.
+  46.5 TEL | Traceback (most recent call last):
+  46.5 TEL |   File "/usr/bin/telepresence/telepresence/cli.py", line 135, in crash_reporting
+  46.5 TEL |     yield
+  46.5 TEL |   File "/usr/bin/telepresence/telepresence/main.py", line 68, in main
+  46.5 TEL |     socks_port, ssh = do_connect(runner, remote_info)
+  46.5 TEL |   File "/usr/bin/telepresence/telepresence/connect/connect.py", line 119, in do_connect
+  46.5 TEL |     args.from_pod
+  46.5 TEL |   File "/usr/bin/telepresence/telepresence/connect/connect.py", line 70, in connect
+  46.5 TEL |     raise RuntimeError("SSH to the cluster failed to start. See logfile.")
+  46.5 TEL | RuntimeError: SSH to the cluster failed to start. See logfile.
+  46.5 TEL | (calling crash reporter...)
+  46.5 >>> | Exit cleanup in progress
+  46.5 TEL | (Cleanup) Kill BG process [15] kubectl port-forward
+  46.5 TEL | [15] kubectl port-forward: exit -15
+  46.5 TEL | (Cleanup) Kill BG process [14] kubectl logs
+  46.5 TEL | [14] kubectl logs: exit -15
+  46.5 TEL | Background process (kubectl logs) exited with return code -15. Command was:
+  46.5 TEL |   oc --context workspace-demo/api-aslak-maistra-upshift-redhat-com:6443/kube:admin --namespace workspace-demo logs -f preference-v1-v1-aslak-vtjvv-859b978bc9-dhmxx --container preference --tail=10
+  46.5 TEL | 
+  46.5 TEL | Recent output was:
+  46.5 TEL |   2020-03-19T23:10:51+0000 [-] SOCKSv5Factory starting on 9050
+  46.5 TEL |   2020-03-19T23:10:51+0000 [socks.SOCKSv5Factory#info] Starting factory <socks.SOCKSv5Factory object at 0x7f95c0b8dba8>
+  46.5 TEL |   2020-03-19T23:10:51+0000 [-] DNSDatagramProtocol starting on 9053
+  46.5 TEL |   2020-03-19T23:10:51+0000 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f95c0b8df28>
+  46.5 TEL |   2020-03-19T23:10:51+0000 [-] Loaded.
+  46.5 TEL |   2020-03-19T23:10:51+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.10.0 (/usr/bin/python3.6 3.6.8) starting up.
+  46.5 TEL |   2020-03-19T23:10:51+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+  46.5 TEL |   2020-03-19T23:11:21+0000 [Poll#error] Failed to contact Telepresence client:
+  46.5 TEL |   2020-03-19T23:11:21+0000 [Poll#error] Connection was refused by other side: 111: Connection refused.
+  46.5 TEL |   2020-03-19T23:11:21+0000 [Poll#warn] Perhaps it's time to exit?
+  46.5 TEL | (Cleanup) Stop time tracking
+  46.5 TEL | END SPAN main.py:40(main)   46.5s
+  46.5 TEL | (Cleanup) Remove temporary directory
+  46.5 TEL | (Cleanup) Save caches

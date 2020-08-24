@@ -1,0 +1,16 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: github-pr
+spec:
+  params:
+    - name: git-repo-name
+      value: $(body.repository.name)
+    - name: pullreq-ref
+      value: $(body.pull_request.head.ref)
+    - name: pullreq-base-sha
+      value: $(body.pull_request.base.sha)
+    - name: pullreq-base-ref
+      value: $(body.pull_request.base.ref)
+    - name: pullreq-head-ref
+      value: $(body.pull_request.head.ref)

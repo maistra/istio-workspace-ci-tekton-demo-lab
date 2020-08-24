@@ -1,0 +1,205 @@
+   0.0 TEL | Telepresence 0.104 launched at Wed Feb 19 13:04:17 2020
+   0.0 TEL |   /usr/bin/telepresence --namespace workspace-demo --deployment customer-v1-v1-aslak-uuidx --expose 8081:8080 --method inject-tcp --run mvn compile quarkus:dev -Ddebug=5001 -Dsuspend=n -Dquarkus.http.port=8081
+   0.0 TEL | uname: uname_result(system='Linux', node='localhost.localdomain', release='5.4.15-200.fc31.x86_64', version='#1 SMP Tue Jan 28 09:08:32 UTC 2020', machine='x86_64', processor='x86_64')
+   0.0 TEL | Platform: linux
+   0.0 TEL | WSL: False
+   0.0 TEL | Python 3.7.6 (default, Jan 30 2020, 09:44:41)
+   0.0 TEL | [GCC 9.2.1 20190827 (Red Hat 9.2.1-1)]
+   0.0 TEL | BEGIN SPAN main.py:40(main)
+   0.0 TEL | BEGIN SPAN startup.py:83(set_kube_command)
+   0.0 TEL | Found kubectl -> /usr/bin/kubectl
+   0.0 TEL | Found oc -> /home/aslak/.asdf/shims/oc
+   0.0 TEL | [1] Capturing: kubectl config current-context
+   0.1 TEL | [1] captured in 0.12 secs.
+   0.1 TEL | [2] Capturing: kubectl --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak version --short
+   1.0 TEL | [2] captured in 0.85 secs.
+   1.0 TEL | [3] Capturing: kubectl --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak config view -o json
+   1.2 TEL | [3] captured in 0.23 secs.
+   1.2 TEL | [4] Capturing: kubectl --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak get ns workspace-demo
+   2.0 TEL | [4] captured in 0.82 secs.
+   2.0 TEL | [5] Capturing: kubectl --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak api-versions
+   2.9 TEL | [5] captured in 0.87 secs.
+   2.9 TEL | Command: oc 1.10.0+d4cacc0
+   2.9 TEL | Context: workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak, namespace: workspace-demo, version: 1.14.6+a8d983c
+   2.9 TEL | [6] Capturing: minishift ip
+   2.9 TEL | [6] [Errno 2] No such file or directory: 'minishift': 'minishift'
+   2.9 >>> | Warning: kubectl 1.10.0+d4cacc0 may not work correctly with cluster version 1.14.6+a8d983c due to the version discrepancy. See https://kubernetes.io/docs/setup/version-skew-policy/ for more information.
+   2.9 >>> | 
+   2.9 TEL | END SPAN startup.py:83(set_kube_command)    2.9s
+   2.9 TEL | [7] Running: oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo get dc/customer-v1-v1-aslak-uuidx
+   3.9   7 | Error from server (NotFound): deploymentconfigs.apps.openshift.io "customer-v1-v1-aslak-uuidx" not found
+   3.9 TEL | [7] exit 1 in 1.02 secs.
+   3.9 >>> | Failed to find OpenShift deploymentconfig customer-v1-v1-aslak-uuidx:
+   3.9 >>> |   Error from server (NotFound): deploymentconfigs.apps.openshift.io "customer-v1-v1-aslak-uuidx" not found
+   3.9 >>> | Will try regular Kubernetes Deployment.
+   3.9 TEL | Found ssh -> /usr/bin/ssh
+   3.9 TEL | [8] Capturing: ssh -V
+   3.9 TEL | [8] captured in 0.02 secs.
+   4.0 TEL | Found mvn -> /home/aslak/dev/tools/apache-maven-3.6.2//bin/mvn
+   4.0 TEL | Found torsocks -> /usr/bin/torsocks
+   4.0 TEL | Found sshfs -> /usr/bin/sshfs
+   4.0 TEL | Found fusermount -> /usr/bin/fusermount
+   4.0 TEL | [9] Running: oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo get pods telepresence-connectivity-check --ignore-not-found
+   5.0 TEL | [9] ran in 1.00 secs.
+   5.6 TEL | Scout info: {'latest_version': '0.104', 'application': 'telepresence', 'notices': []}
+   5.6 >>> | Starting network proxy to cluster using the existing proxy Deployment customer-v1-v1-aslak-uuidx
+   5.6 TEL | [10] Running: oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo get deployment customer-v1-v1-aslak-uuidx
+   6.3  10 | NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+   6.3  10 | customer-v1-v1-aslak-uuidx   0/1     1            0           8s
+   6.3 TEL | [10] ran in 0.74 secs.
+   6.4 TEL | BEGIN SPAN remote.py:142(get_remote_info)
+   6.4 TEL | BEGIN SPAN remote.py:75(get_deployment_json)
+   6.4 TEL | [11] Capturing: oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo get deployment -o json customer-v1-v1-aslak-uuidx
+   7.4 TEL | [11] captured in 1.01 secs.
+   7.4 TEL | END SPAN remote.py:75(get_deployment_json)    1.0s
+   7.4 TEL | Searching for Telepresence pod:
+   7.4 TEL |   with name customer-v1-v1-aslak-uuidx-*
+   7.4 TEL |   with labels {'app': 'customer', 'telepresence': 'test', 'version': 'v1-aslak-uuidx', 'version-source': 'v1'}
+   7.4 TEL | [12] Capturing: oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo get pod -o json
+   8.5 TEL | [12] captured in 1.18 secs.
+   8.5 TEL | Checking customer-v1-774b89c845-gjbqc
+   8.5 TEL | --> Name does not match
+   8.5 TEL | Checking customer-v1-v1-aslak-uuidx-7575cdbdf9-9clqz
+   8.5 TEL | Looks like we've found our pod!
+   8.5 TEL | BEGIN SPAN remote.py:104(wait_for_pod)
+   8.5 TEL | [13] Capturing: oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo get pod customer-v1-v1-aslak-uuidx-7575cdbdf9-9clqz -o json
+   9.3 TEL | [13] captured in 0.73 secs.
+   9.3 TEL | END SPAN remote.py:104(wait_for_pod)    0.7s
+   9.3 TEL | END SPAN remote.py:142(get_remote_info)    2.9s
+   9.3 TEL | BEGIN SPAN connect.py:37(connect)
+   9.3 TEL | [14] Launching kubectl logs: oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo logs -f customer-v1-v1-aslak-uuidx-7575cdbdf9-9clqz --container customer --tail=10
+   9.3 TEL | [15] Launching kubectl port-forward: oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo port-forward customer-v1-v1-aslak-uuidx-7575cdbdf9-9clqz 46261:8022
+   9.3 TEL | [16] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 46261 telepresence@127.0.0.1 /bin/true
+   9.3 TEL | [16] exit 255 in 0.01 secs.
+   9.6 TEL | [17] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 46261 telepresence@127.0.0.1 /bin/true
+   9.6 TEL | [17] exit 255 in 0.02 secs.
+   9.8 TEL | [18] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 46261 telepresence@127.0.0.1 /bin/true
+   9.9 TEL | [18] exit 255 in 0.02 secs.
+  10.1 TEL | [19] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 46261 telepresence@127.0.0.1 /bin/true
+  10.1 TEL | [19] exit 255 in 0.01 secs.
+  10.3  14 | 2020-02-19T12:04:25+0000 [-] Loading ./forwarder.py...
+  10.3  14 | 2020-02-19T12:04:25+0000 [-] /etc/resolv.conf changed, reparsing
+  10.3  14 | 2020-02-19T12:04:25+0000 [-] Resolver added ('172.30.0.10', 53) to server list
+  10.3  14 | 2020-02-19T12:04:25+0000 [-] SOCKSv5Factory starting on 9050
+  10.3  14 | 2020-02-19T12:04:25+0000 [socks.SOCKSv5Factory#info] Starting factory <socks.SOCKSv5Factory object at 0x7fa27122eb70>
+  10.3  14 | 2020-02-19T12:04:25+0000 [-] DNSDatagramProtocol starting on 9053
+  10.3  14 | 2020-02-19T12:04:25+0000 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7fa27122eef0>
+  10.3  14 | 2020-02-19T12:04:25+0000 [-] Loaded.
+  10.3  14 | 2020-02-19T12:04:25+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.10.0 (/usr/bin/python3.6 3.6.8) starting up.
+  10.3  14 | 2020-02-19T12:04:25+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+  10.4 TEL | [20] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 46261 telepresence@127.0.0.1 /bin/true
+  10.4 TEL | [20] exit 255 in 0.01 secs.
+  10.6 TEL | [21] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 46261 telepresence@127.0.0.1 /bin/true
+  10.7 TEL | [21] exit 255 in 0.02 secs.
+  10.8  15 | Forwarding from 127.0.0.1:46261 -> 8022
+  10.8  15 | Forwarding from [::1]:46261 -> 8022
+  10.9 TEL | [22] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 46261 telepresence@127.0.0.1 /bin/true
+  10.9  15 | Handling connection for 46261
+  12.1 TEL | [22] ran in 1.17 secs.
+  12.1 TEL | [23] Launching SSH port forward (exposed ports): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 46261 telepresence@127.0.0.1 -R '*:8080:127.0.0.1:8081'
+  12.1 TEL | Launching Web server for proxy poll
+  12.1 TEL | [24] Launching SSH port forward (socks and proxy poll): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 46261 telepresence@127.0.0.1 -L127.0.0.1:38589:127.0.0.1:9050 -R9055:127.0.0.1:43299
+  12.1 TEL | END SPAN connect.py:37(connect)    2.8s
+  12.1 TEL | BEGIN SPAN remote_env.py:29(get_remote_env)
+  12.1  15 | Handling connection for 46261
+  12.1 TEL | [25] Capturing: oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo exec customer-v1-v1-aslak-uuidx-7575cdbdf9-9clqz --container customer -- python3 podinfo.py
+  12.1  15 | Handling connection for 46261
+  13.9 TEL | [25] captured in 1.77 secs.
+  13.9 TEL | END SPAN remote_env.py:29(get_remote_env)    1.8s
+  13.9 TEL | BEGIN SPAN mount.py:30(mount_remote_volumes)
+  13.9 TEL | [26] Running: sshfs -p 46261 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null telepresence@127.0.0.1:/ /tmp/tel-2az_c1ga/fs
+  13.9  15 | Handling connection for 46261
+  15.4 TEL | [26] ran in 1.47 secs.
+  15.4 TEL | END SPAN mount.py:30(mount_remote_volumes)    1.5s
+  15.4 TEL | BEGIN SPAN local.py:42(set_up_torsocks)
+  15.4 TEL | [27] Running: torsocks python3 -c 'import socket; socket.socket().connect(('"'"'kubernetes.default'"'"', 443))'
+  16.3 TEL | [27] ran in 0.91 secs.
+  16.3 TEL | END SPAN local.py:42(set_up_torsocks)    0.9s
+  16.3 >>> | Setup complete. Launching your command.
+  16.3 TEL | Everything launched. Waiting to exit...
+  16.3 TEL | BEGIN SPAN runner.py:725(wait_for_exit)
+1582113873 WARNING torsocks[2324245]: [syscall] Unsupported syscall number 229. Denying the call (in tsocks_syscall() at syscall.c:567)
+1582113876 WARNING torsocks[2324312]: [syscall] Unsupported syscall number 229. Denying the call (in tsocks_syscall() at syscall.c:567)
+  39.0 TEL | (proxy checking local liveness)
+  39.1  14 | 2020-02-19T12:04:56+0000 [Poll#info] Checkpoint
+  69.1 TEL | (proxy checking local liveness)
+  69.3  14 | 2020-02-19T12:05:26+0000 [Poll#info] Checkpoint
+  99.1 TEL | (proxy checking local liveness)
+  99.3  14 | 2020-02-19T12:05:56+0000 [Poll#info] Checkpoint
+ 129.0 TEL | (proxy checking local liveness)
+ 129.1  14 | 2020-02-19T12:06:26+0000 [Poll#info] Checkpoint
+ 149.5 >>> | Received signal SIGTERM while in function wait_for_exit
+ 149.5 TEL | EXITING successful session.
+ 149.5 >>> | Exit cleanup in progress
+ 149.5 TEL | (Cleanup) Terminate local process
+ 149.5 TEL | Killing local process...
+ 149.8 TEL | Main process (torsocks mvn compile quarkus:dev -Ddebug=5001 -Dsuspend=n -Dquarkus.http.port=8081)
+ 149.8 TEL |  exited with code 143.
+ 149.9 TEL | (Cleanup) Unmount remote filesystem
+ 149.9 TEL | [28] Running: fusermount -z -u /tmp/tel-2az_c1ga/fs
+ 149.9  28 | fusermount: entry for /tmp/tel-2az_c1ga/fs not found in /etc/mtab
+ 149.9 TEL | [28] exit 1 in 0.00 secs.
+ 149.9 TEL | (Cleanup) Unmount remote filesystem failed:
+ 149.9 TEL | (Cleanup)   Command '['fusermount', '-z', '-u', '/tmp/tel-2az_c1ga/fs']' returned non-zero exit status 1.
+ 149.9 TEL | (Cleanup) Kill BG process [24] SSH port forward (socks and proxy poll)
+ 149.9 TEL | [24] SSH port forward (socks and proxy poll): exit 0
+ 149.9 TEL | (Cleanup) Kill Web server for proxy poll
+ 150.0 TEL | (Cleanup) Kill BG process [23] SSH port forward (exposed ports)
+ 150.0 TEL | [23] SSH port forward (exposed ports): exit 0
+ 150.0 TEL | (Cleanup) Kill BG process [15] kubectl port-forward
+ 150.0 TEL | [15] kubectl port-forward: exit -15
+ 150.1 TEL | (Cleanup) Kill BG process [14] kubectl logs
+ 150.1 TEL | [14] kubectl logs: exit -15
+ 150.1 TEL | Background process (kubectl logs) exited with return code -15. Command was:
+ 150.1 TEL |   oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com:6443/aslak --namespace workspace-demo logs -f customer-v1-v1-aslak-uuidx-7575cdbdf9-9clqz --container customer --tail=10
+ 150.1 TEL | 
+ 150.1 TEL | Recent output was:
+ 150.1 TEL |   2020-02-19T12:04:25+0000 [socks.SOCKSv5Factory#info] Starting factory <socks.SOCKSv5Factory object at 0x7fa27122eb70>
+ 150.1 TEL |   2020-02-19T12:04:25+0000 [-] DNSDatagramProtocol starting on 9053
+ 150.1 TEL |   2020-02-19T12:04:25+0000 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7fa27122eef0>
+ 150.1 TEL |   2020-02-19T12:04:25+0000 [-] Loaded.
+ 150.1 TEL |   2020-02-19T12:04:25+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.10.0 (/usr/bin/python3.6 3.6.8) starting up.
+ 150.1 TEL |   2020-02-19T12:04:25+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+ 150.1 TEL |   2020-02-19T12:04:56+0000 [Poll#info] Checkpoint
+ 150.1 TEL |   2020-02-19T12:05:26+0000 [Poll#info] Checkpoint
+ 150.1 TEL |   2020-02-19T12:05:56+0000 [Poll#info] Checkpoint
+ 150.1 TEL |   2020-02-19T12:06:26+0000 [Poll#info] Checkpoint
+ 150.1 TEL | (Cleanup) Stop time tracking
+ 150.1 TEL | END SPAN main.py:40(main)  150.0s
+ 150.1 TEL | SPAN SUMMARY:
+ 150.1 TEL |  150.0s main.py:40(main)
+ 150.1 TEL |    2.9s   startup.py:83(set_kube_command)
+ 150.1 TEL |    0.1s     1 kubectl config current-context
+ 150.1 TEL |    0.8s     2 kubectl --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshif
+ 150.1 TEL |    0.2s     3 kubectl --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshif
+ 150.1 TEL |    0.8s     4 kubectl --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshif
+ 150.1 TEL |    0.9s     5 kubectl --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshif
+ 150.1 TEL |    ???     6 minishift ip
+ 150.1 TEL |    1.0s       7 oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com
+ 150.1 TEL |    0.0s       8 ssh -V
+ 150.1 TEL |    1.0s       9 oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-com
+ 150.1 TEL |    0.7s       10 oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-co
+ 150.1 TEL |    2.9s       remote.py:142(get_remote_info)
+ 150.1 TEL |    1.0s         remote.py:75(get_deployment_json)
+ 150.1 TEL |    1.0s           11 oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-co
+ 150.1 TEL |    1.2s         12 oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-co
+ 150.1 TEL |    0.7s         remote.py:104(wait_for_pod)
+ 150.1 TEL |    0.7s           13 oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-co
+ 150.1 TEL |    2.8s       connect.py:37(connect)
+ 150.1 TEL |    0.0s         16 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 150.1 TEL |    0.0s         17 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 150.1 TEL |    0.0s         18 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 150.1 TEL |    0.0s         19 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 150.1 TEL |    0.0s         20 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 150.1 TEL |    0.0s         21 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 150.1 TEL |    1.2s         22 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 150.1 TEL |    1.8s       remote_env.py:29(get_remote_env)
+ 150.1 TEL |    1.8s         25 oc --context workspace-demo/api-yuaxu-maistra-ocp-4-2-devcluster-openshift-co
+ 150.1 TEL |    1.5s       mount.py:30(mount_remote_volumes)
+ 150.1 TEL |    1.5s         26 sshfs -p 46261 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/
+ 150.1 TEL |    0.9s       local.py:42(set_up_torsocks)
+ 150.1 TEL |    0.9s         27 torsocks python3 -c 'import socket; socket.socket().connect(('"'"'kubernetes.
+ 150.1 TEL |    ???       runner.py:725(wait_for_exit)
+ 150.1 TEL |    0.0s         28 fusermount -z -u /tmp/tel-2az_c1ga/fs
+ 150.1 TEL | (Cleanup) Remove temporary directory
+ 150.1 TEL | (Cleanup) Save caches

@@ -1,0 +1,25 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: create-session
+rules:
+  - apiGroups:
+      - maistra.io
+    resources:
+      - sessions
+    verbs:
+      - "*"
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pipeline-sessions
+subjects:
+  - kind: ServiceAccount
+    name: pipeline
+    namespace: workspace-demo
+roleRef:
+  kind: Role
+  name: create-session
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,9 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: tekton-demo-lab-image
+spec:
+  params:
+    - name: url
+      value: image-registry.openshift-image-registry.svc:5000/workspace-demo/service:latest
+  type: image

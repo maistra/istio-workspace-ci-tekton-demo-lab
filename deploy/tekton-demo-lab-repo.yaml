@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: tekton-demo-lab-repo
+spec:
+  params:
+    - name: url
+      value: https://github.com/maistra/istio-workspace-ci-tekton-demo-lab.git
+    - name: revision
+      value: test
+  type: git

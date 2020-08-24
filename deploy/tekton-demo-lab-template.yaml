@@ -1,0 +1,93 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: pull-request-preview
+spec:
+  params:
+    - name: git-repo-url
+      description: The git repository url
+    - name: pullreq-html-url
+      description: The pull request url
+    - name: pullreq-sha
+      description: The pr git revision
+      default: master
+    - name: pullreq-base-sha
+      description: The base git revision
+      default: master
+    - name: pullreq-repo-full_name
+      description: The name of the deployment to be created / patched
+    - name: git-repo-name
+      description: The name of the deployment to be created / patched
+    - name: pullreq-head-ref
+      description: The head branch ref
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        name: build-and-preview-$(params.git-repo-name)-$(uid)
+      spec:
+        serviceAccountName: pipeline
+        pipelineRef:
+          name: build-and-preview
+        params:
+          - name: git-revision
+            value: $(params.pullreq-sha)
+          - name: git-repo-full-name
+            value: $(params.pullreq-repo-full_name)
+          - name: git-repo-name
+            value: $(params.git-repo-name)
+          - name: git-pr-url
+            value: $(params.pullreq-html-url)
+          - name: git-pr-base-sha
+            value: $(params.pullreq-base-sha)
+          - name: git-repo-url
+            value: $(params.git-repo-url)
+          - name: git-revision
+            value: $(params.pullreq-sha)
+          - name: git-pr-head-ref
+            value: $(params.pullreq-head-ref)
+        workspaces:
+          - name: sync
+            persistentVolumeClaim:
+              claimName: pipeline2
+            subPath: $(uid)-sync/
+          - name: source
+            persistentVolumeClaim:
+              claimName: pipeline2
+            subPath: $(uid)/
+        resources:
+          - name: git-repo
+            resourceSpec:
+              type: git
+              params:
+                - name: revision
+                  value: $(params.pullreq-sha)
+                - name: url
+                  value: $(params.git-repo-url)
+                - name: depth
+                  value: "0"
+
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: pull-request-close
+spec:
+  params:
+    - name: git-repo-name
+      description: The name of the deployment to be created / patched
+    - name: pullreq-head-ref
+      description: The head branch ref
+
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        name: undeploy-preview-$(params.git-repo-name)-$(uid)
+      spec:
+        serviceAccountName: pipeline
+        pipelineRef:
+          name: undeploy-preview
+        params:
+          - name: git-pr-head-ref
+            value: $(params.pullreq-head-ref)
