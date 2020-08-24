@@ -370,7 +370,7 @@ spec:
       type: string
       description: the head branch ref
   tasks:
-    - name: preview
+    - name: remove-customer
       taskRef:
         name: ike-delete
         kind: Task
@@ -378,7 +378,29 @@ spec:
         - name: session
           value: $(params.git-pr-head-ref)
         - name: target
-          value: ratings-v1
+          value: customer-v1
+        - name: namespace
+          value: workspace-demo
+    - name: remove-preference
+      taskRef:
+        name: ike-delete
+        kind: Task
+      params:
+        - name: session
+          value: $(params.git-pr-head-ref)
+        - name: target
+          value: preference-v1
+        - name: namespace
+          value: workspace-demo
+    - name: remove-recommendation
+      taskRef:
+        name: ike-delete
+        kind: Task
+      params:
+        - name: session
+          value: $(params.git-pr-head-ref)
+        - name: target
+          value: recommendation-v1
         - name: namespace
           value: workspace-demo
 
