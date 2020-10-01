@@ -1,0 +1,35 @@
+apiVersion: 1.0.0
+metadata:
+  generateName: java-maven-
+projects:
+  - name: demo
+    source:
+      type: git
+      location: 'https://github.com/maistra/istio-workspace-ci-tekton-demo-lab.git'
+components:
+  - type: chePlugin
+    id: redhat/java11/latest
+  - type: dockerimage
+    alias: maven
+    image: 'quay.io/eclipse/che-java11-maven@sha256:c32ffe266e36cf53899c26f75d4c2ba029ef6109f34d0111445b6f59ba47a312'
+    env:
+      - name: MAVEN_CONFIG
+        value: ''
+      - name: MAVEN_OPTS
+        value: '-XX:MaxRAMPercentage=50 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/user'
+      - name: JAVA_OPTS
+        value: '-XX:MaxRAMPercentage=50 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom'
+      - name: JAVA_TOOL_OPTIONS
+        value: '-XX:MaxRAMPercentage=50 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom'
+    memoryLimit: 512Mi
+    mountSources: true
+    volumes:
+      - name: m2
+        containerPath: /home/user/.m2
+commands:
+  - name: Run Preference Service 
+    actions:
+      - type: exec
+        component: maven
+        command: mvn clean quarkus:dev 
+        workdir: '${CHE_PROJECTS_ROOT}/demo/workshop/content/src/preference/'
