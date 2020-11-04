@@ -8,5 +8,9 @@ spec:
   resources:
     requests:
       storage: 20Gi
+  ## WARN: This is cloud provider specific. You can use following
+  ## - aws: gp2
+  ## - gcp: standard
   storageClassName: gp2
   volumeMode: Filesystem
+  
