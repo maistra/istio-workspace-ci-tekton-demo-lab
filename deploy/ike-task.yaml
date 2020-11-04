@@ -25,7 +25,7 @@ spec:
       description: The URL of the new route
   steps:
     - name: ike
-      image: docker.io/aslakknutsen/istio-workspace:latest
+      image: quay.io/maistra/istio-workspace:tekton-demo
       script: |
         STATE=`ike create --session $(params.session) --route $(params.route) --deployment $(params.target) --namespace $(params.namespace) --image $(params.image) --json`
         echo "$STATE" | grep \"hosts\": | cut -d \" -f 4 > /tekton/results/url
@@ -49,7 +49,7 @@ spec:
       description: What to call the session
   steps:
     - name: ike
-      image: docker.io/aslakknutsen/istio-workspace:latest
+      image: quay.io/maistra/istio-workspace:tekton-demo
       script: |
         ike delete --session $(params.session) --deployment $(params.target) --namespace $(params.namespace)
 
@@ -72,7 +72,7 @@ spec:
       description: The URL of the new route
   steps:
     - name: oc
-      image: openshift/origin-cli:latest
+      image: openshift/origin-cli:4.5
       script: |
         STATE=`oc get session $(params.session) --namespace $(params.namespace) -o json`
         echo "$STATE" | grep \"hosts\": | cut -d \" -f 4 | uniq > /tekton/results/url
