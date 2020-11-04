@@ -14,8 +14,8 @@ spec:
         - cel:
             filter: "body.action in ['opened', 'synchronize', 'reopened']"
       bindings:
-        - name: github-pr
-        - name: github-pullreq
+        - ref: github-pr
+        - ref: github-pullreq
           kind: ClusterTriggerBinding
       template:
         name: pull-request-preview
@@ -26,8 +26,8 @@ spec:
         - cel:
             filter: "body.action in ['closed', 'merged']"
       bindings:
-        - name: github-pr
-        - name: github-pullreq
+        - ref: github-pr
+        - ref: github-pullreq
           kind: ClusterTriggerBinding
       template:
         name: pull-request-close
