@@ -24,28 +24,28 @@ spec:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        name: build-and-preview-$(params.git-repo-name)-$(uid)
+        generateName: build-and-preview-$(tt.params.git-repo-name)-$(uid)
       spec:
         serviceAccountName: pipeline
         pipelineRef:
           name: build-and-preview
         params:
           - name: git-revision
-            value: $(params.pullreq-sha)
+            value: $(tt.params.pullreq-sha)
           - name: git-repo-full-name
-            value: $(params.pullreq-repo-full_name)
+            value: $(tt.params.pullreq-repo-full_name)
           - name: git-repo-name
-            value: $(params.git-repo-name)
+            value: $(tt.params.git-repo-name)
           - name: git-pr-url
-            value: $(params.pullreq-html-url)
+            value: $(tt.params.pullreq-html-url)
           - name: git-pr-base-sha
-            value: $(params.pullreq-base-sha)
+            value: $(tt.params.pullreq-base-sha)
           - name: git-repo-url
-            value: $(params.git-repo-url)
+            value: $(tt.params.git-repo-url)
           - name: git-revision
-            value: $(params.pullreq-sha)
+            value: $(tt.params.pullreq-sha)
           - name: git-pr-head-ref
-            value: $(params.pullreq-head-ref)
+            value: $(tt.params.pullreq-head-ref)
         workspaces:
           - name: sync
             persistentVolumeClaim:
@@ -61,9 +61,9 @@ spec:
               type: git
               params:
                 - name: revision
-                  value: $(params.pullreq-sha)
+                  value: $(tt.params.pullreq-sha)
                 - name: url
-                  value: $(params.git-repo-url)
+                  value: $(tt.params.git-repo-url)
                 - name: depth
                   value: "0"
 
@@ -83,11 +83,11 @@ spec:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
-        name: undeploy-preview-$(params.git-repo-name)-$(uid)
+        generateName: undeploy-preview-$(tt.params.git-repo-name)-$(uid)
       spec:
         serviceAccountName: pipeline
         pipelineRef:
           name: undeploy-preview
         params:
           - name: git-pr-head-ref
-            value: $(params.pullreq-head-ref)
+            value: $(tt.params.pullreq-head-ref)
