@@ -25,7 +25,7 @@ spec:
       containers:
       - env:
         - name: JAVA_OPTIONS
-          value: -Xmx256m
+          value: -Xms128m -Xmx128m
         image: docker.io/bartoszmajsak/recommendation:v1
         imagePullPolicy: Always
         name: recommendation

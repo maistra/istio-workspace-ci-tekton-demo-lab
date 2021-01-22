@@ -26,7 +26,7 @@ spec:
       containers:
       - env:
         - name: JAVA_OPTIONS
-          value: -Xms128m -Xmx256m -Djava.net.preferIPv4Stack=true -Djava.security.egd=file:///dev/./urandom
+          value: -Xms128m -Xmx128m -Djava.net.preferIPv4Stack=true -Djava.security.egd=file:///dev/./urandom
         image: docker.io/bartoszmajsak/preference:v1
         imagePullPolicy: Always
         name: preference
