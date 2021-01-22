@@ -72,7 +72,7 @@ spec:
       description: The URL of the new route
   steps:
     - name: oc
-      image: openshift/origin-cli:4.5
+      image: quay.io/openshift/origin-cli:4.6
       script: |
         STATE=`oc get session $(params.session) --namespace $(params.namespace) -o json`
         echo "$STATE" | grep \"hosts\": | cut -d \" -f 4 | uniq > /tekton/results/url
