@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 @Path("/")
 public class PreferenceResource {
 
-    private static final String RESPONSE_STRING_FORMAT = "preference => %s\n";
+    private static final String RESPONSE_STRING_FORMAT = "preference PR => %s\n";
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
